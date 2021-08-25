@@ -1,4 +1,5 @@
-import { addTask, printAllTasks } from './task'
+import { addTask, printAllTasks, displayTasks } from './task'
+import { displayProjects } from './project'
 
 
 const contentDiv = document.getElementById('content-div')
@@ -30,57 +31,33 @@ const makeInput = (id, value, parent) => {
     _label.innerHTML = _.startCase(_str[1]);
 }
 
-const displayTasks = () => {
-    console.log('displayTasks works?')
-    var bottomDiv = document.getElementById('bottom-div')
-    bottomDiv.setAttribute('class', 'task-tab-active')
-    var taskTabDivContainer = document.getElementById('task-tab-div-container');
-    taskTabDivContainer.setAttribute('class', 'front');
-    var projectTabDivContainer = document.getElementById('project-tab-div-container');
-    projectTabDivContainer.setAttribute('class', 'back');
-}
-
-const displayProjects = () => {
-    console.log('displayProjects works?')
-    var bottomDiv = document.getElementById('bottom-div')
-    bottomDiv.setAttribute('class', 'project-tab-active')
-    var taskTabDivContainer = document.getElementById('task-tab-div-container');
-    taskTabDivContainer.setAttribute('class', 'back');
-    var projectTabDivContainer = document.getElementById('project-tab-div-container');
-    projectTabDivContainer.setAttribute('class', 'front');
-}
-
 const printTop = () => {
-
-    // const topDiv = makeDomThing('task-top-div', 'div', contentDiv)
     const topDiv = document.getElementById('top-div')
     const taskTabDivContainer = makeDomThing('task-tab-div-container', 'div', topDiv)
-    taskTabDivContainer.setAttribute('class', 'front')
     const taskTabDiv = makeDomThing('task-tab-div', 'div', taskTabDivContainer)
     const taskTab = makeDomThing('task-tab', 'a', taskTabDiv)
-    taskTab.addEventListener('click', displayTasks)
     taskTab.innerHTML = 'Tasks';
-
+    taskTab.addEventListener('click', () => {
+        clearContent(topDiv)
+        printTop()
+        displayTasks()
+    });
     const projectTabDivContainer = makeDomThing('project-tab-div-container', 'div', topDiv)
-    projectTabDivContainer.setAttribute('class', 'back')
+
 
     const projectTabDiv = makeDomThing('project-tab-div', 'div', projectTabDivContainer)
     const projectTab = makeDomThing('project-tab', 'a', projectTabDiv)
-    const bottomDiv = document.getElementById('bottom-div')
-    // projectTab.addEventListener('click', displayProjects)
-    projectTab.addEventListener('click', () => {
-        // addTask();
-        displayProjects()
-        clearContent(bottomDiv);
-        // printAllTasks();
-    });
-
+    // const bottomDiv = document.getElementById('bottom-div')
     projectTab.innerHTML = 'Projects';
+    projectTab.addEventListener('click', () => {
+        clearContent(topDiv)
+        printTop()
+        displayProjects()
+    });
 }
 
 const printBottom = () => {
 
-    // const bottomDiv = makeDomThing('bottom-div', 'div', contentDiv);
     const bottomDiv = document.getElementById('bottom-div')
 
     const newTaskDiv = makeDomThing('new-task-div', 'div', bottomDiv);
@@ -118,7 +95,7 @@ const printOnLoad = () => {
 
     printTop()
 
-    printBottom()
+    // printBottom()
 
 }
 

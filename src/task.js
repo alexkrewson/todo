@@ -1,6 +1,4 @@
-// var taskListDiv = document.getElementById('task-list-div');
-import { printOnLoad, clearContent, makeDomThing, makeInput, printTop, printBottom  } from './print'
-
+import { printOnLoad, clearContent, makeDomThing, makeInput, printBottom } from './print'
 
 
 const taskFactory = (title, description, dueDate, priority, notes, project) => {
@@ -32,12 +30,11 @@ const addTask = () => {
 }
 
 const removeTask = () => {
-    // var _taskListDiv = document.getElementById('task-list-div');
     var _index = document.activeElement.parentNode.parentNode.id;
     var _task = taskList[_index]
-    taskList.splice(_index,1);
-    
-    
+    taskList.splice(_index, 1);
+
+
 }
 
 const toggleCompletion = () => {
@@ -47,21 +44,20 @@ const toggleCompletion = () => {
     if (_task.status == 'completed') {
         _task.status = 'not completed';
         completeButton.innerHTML = 'done'
-        // completeButton.setAttribute('class', 'not-completed');
     } else {
         _task.status = 'completed';
         completeButton.innerHTML = 'undo'
-        // completeButton.setAttribute('class', 'completed');
     }
     console.log(_task.title)
     console.log(_task.status)
-    // console.log('toggleCompletion works?')
 
 }
 
 
+
 const printTask = (task) => {
-    var taskListDiv = document.getElementById('task-list-div');
+    var taskListDiv = document.getElementById('task-list-div')
+    console.log(taskListDiv)
     var newRow = document.createElement('div');
     newRow.setAttribute('class', 'task-row');
     newRow.id = taskList.indexOf(task);
@@ -87,14 +83,11 @@ const printTask = (task) => {
     var controlColumn = document.createElement('div');
     controlColumn.setAttribute('class', 'task-control-column');
 
-    // var completeButton = document.createElement('button');
-    // completeButton.id = 'task-complete-button'
     completeButton.addEventListener('click', () => {
         toggleCompletion();
         clearContent(taskListDiv);
         printAllTasks();
     });
-    // completeButton.innerHTML = 'done'
 
     var editButton = document.createElement('button');
     editButton.id = 'task-edit-button'
@@ -110,63 +103,31 @@ const printTask = (task) => {
     });
     removeButton.innerHTML = 'remove'
 
-
-
-
     controlColumn.appendChild(completeButton)
     controlColumn.appendChild(editButton)
     controlColumn.appendChild(removeButton)
 
-
-    // var descriptionColumn = document.createElement('div');
-    // descriptionColumn.innerHTML = task.description;
-    // var dueDateColumn = document.createElement('div');
-    // dueDateColumn.innerHTML = task.dueDate;
-    // var priorityColumn = document.createElement('div');
-    // priorityColumn.innerHTML = task.priority;
-    // var notesColumn = document.createElement('div');
-    // notesColumn.innerHTML = task.notes;
-    // var projectColumn = document.createElement('div');
-    // projectColumn.innerHTML = task.project;
-
-
     newRow.appendChild(titleColumn);
     newRow.appendChild(controlColumn);
-    // newRow.appendChild(descriptionColumn)
-
-    // newRow.appendChild(dueDateColumn)
-
-    // newRow.appendChild(priorityColumn)
-
-    // newRow.appendChild(notesColumn)
-
-    // newRow.appendChild(projectColumn)
-
     taskListDiv.appendChild(newRow)
 }
 
 const printAllTasks = () => {
-    // var taskListDiv = document.getElementById('task-list-div');
-    // var taskHeaders = {title: "TITLE"};
-    // printTask(taskHeaders);
+
     taskList.forEach(printTask);
 }
 
 const editTask = (task) => {
-    
     task.title = document.getElementById('edit-title-field-task').value;
     task.description = document.getElementById('edit-description-field-task').value;
     task.duedate = document.getElementById('edit-duedate-field-task').value;
     task.priority = document.getElementById('edit-priority-field-task').value;
     task.notes = document.getElementById('edit-notes-field-task').value;
     task.project = document.getElementById('edit-project-field-task').value;
-
-    
-
 }
 
 const printEditTask = () => {
-    
+
     var _index = document.activeElement.parentNode.parentNode.id;
     var _task = taskList[_index]
     var bottomDiv = document.getElementById('bottom-div');
@@ -183,13 +144,50 @@ const printEditTask = () => {
     submitEditButton.addEventListener('click', () => {
         editTask(_task);
         clearContent(bottomDiv);
-        // printOnLoad()
-        // clearContent(taskListDiv);
         printBottom();
         printAllTasks();
-        // summonTaskInputs();
     });
 
 }
 
-export { addTask, removeTask, printAllTasks }
+const displayTasks = () => {
+    var taskTabDivContainer = document.getElementById('task-tab-div-container');
+    taskTabDivContainer.setAttribute('class', 'front');
+    var projectTabDivContainer = document.getElementById('project-tab-div-container');
+    projectTabDivContainer.setAttribute('class', 'back');
+    var bottomDiv = document.getElementById('bottom-div')
+    bottomDiv.setAttribute('class', 'task-tab-active')
+
+    clearContent(bottomDiv)
+    createTaskDivs()
+    printTaskInputs()
+    printAllTasks()
+}
+
+const createTaskDivs = () => {
+    const bottomDiv = document.getElementById('bottom-div');
+    const newTaskDiv = makeDomThing('new-task-div', 'div', bottomDiv);
+    const taskListDiv = makeDomThing('task-list-div', 'div', bottomDiv);
+}
+
+const printTaskInputs = () => {
+
+    var newTaskDiv = document.getElementById('new-task-div')
+    console.log(newTaskDiv)
+    makeInput('task-title-field', '', newTaskDiv);
+    makeInput('task-description-field', '', newTaskDiv);
+    makeInput('task-duedate-field', '', newTaskDiv);
+    makeInput('task-priority-field', '', newTaskDiv);
+    makeInput('task-notes-field', '', newTaskDiv);
+    makeInput('task-project-field', '', newTaskDiv);
+
+    const newTaskButton = makeDomThing('new-task-button', 'button', newTaskDiv);
+    newTaskButton.innerHTML = '+';
+    newTaskButton.addEventListener('click', () => {
+        addTask();
+        clearContent(contentDiv);
+        printOnLoad()
+        printAllTasks();
+    });
+}
+export { addTask, removeTask, printAllTasks, displayTasks }
