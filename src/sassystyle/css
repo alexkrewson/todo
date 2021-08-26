@@ -101,8 +101,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 25px;
-  margin-right: 20px; }
+  margin-top: 25px; }
   .input-container input {
     border-radius: 10px;
     border-style: solid;
@@ -130,6 +129,7 @@
 
 .new-entry-div {
   display: flex;
+  justify-content: space-around;
   align-items: center;
   width: 80%; }
 
@@ -261,3 +261,5 @@ label {
     border-color: #380046;
     color: #380046;
     background-color: transparent; }
+
+/*# sourceMappingURL=css.map */

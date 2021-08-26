@@ -1,5 +1,5 @@
-import { addTask, printAllTasks, displayTasks } from './task'
-import { displayProjects } from './project'
+import { addTask, printAllTasks, displayTaskTab } from './task'
+import { displayProjectTab } from './project'
 
 
 const contentDiv = document.getElementById('content-div')
@@ -29,6 +29,7 @@ const makeInput = (id, value, parent) => {
     const _label = makeDomThing(_labelName, 'label', _container);
     _label.for = _labelName;
     _label.innerHTML = _.startCase(_str[1]);
+    return _field;
 }
 
 const printTop = () => {
@@ -40,7 +41,7 @@ const printTop = () => {
     taskTab.addEventListener('click', () => {
         clearContent(topDiv)
         printTop()
-        displayTasks()
+        displayTaskTab()
     });
     const projectTabDivContainer = makeDomThing('project-tab-div-container', 'div', topDiv)
 
@@ -52,7 +53,7 @@ const printTop = () => {
     projectTab.addEventListener('click', () => {
         clearContent(topDiv)
         printTop()
-        displayProjects()
+        displayProjectTab()
     });
 }
 
@@ -98,6 +99,7 @@ const printOnLoad = () => {
     // printBottom()
 
 }
+
 
 
 
